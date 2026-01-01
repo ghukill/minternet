@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 150">
+  <!-- Bowl -->
+  <path d="M30 80 Q30 130, 100 130 Q170 130, 170 80 Z" fill="#d4e5f7" stroke="#6b9bc3" stroke-width="2"/>
+  <ellipse cx="100" cy="80" rx="70" ry="20" fill="#f5deb3" stroke="#6b9bc3" stroke-width="2"/>
+
+  <!-- Soup surface -->
+  <ellipse cx="100" cy="80" rx="65" ry="17" fill="#e07830"/>
+
+  <!-- Vegetables floating -->
+  <!-- Carrot pieces -->
+  <circle cx="70" cy="78" r="6" fill="#ff6b35"/>
+  <circle cx="120" cy="82" r="5" fill="#ff6b35"/>
+
+  <!-- Potato cubes -->
+  <rect x="85" y="75" width="10" height="8" rx="1" fill="#f5deb3"/>
+  <rect x="135" y="77" width="8" height="6" rx="1" fill="#f5deb3"/>
+
+  <!-- Green beans -->
+  <rect x="55" y="80" width="12" height="4" rx="2" fill="#228b22"/>
+  <rect x="105" y="76" width="10" height="4" rx="2" fill="#228b22"/>
+
+  <!-- Corn kernels -->
+  <circle cx="145" cy="79" r="3" fill="#ffd700"/>
+  <circle cx="78" cy="83" r="3" fill="#ffd700"/>
+
+  <!-- Steam -->
+  <path d="M60 60 Q55 50, 60 40" stroke="#ddd" stroke-width="3" fill="none" opacity="0.6"/>
+  <path d="M100 55 Q95 45, 100 35" stroke="#ddd" stroke-width="3" fill="none" opacity="0.6"/>
+  <path d="M140 60 Q145 50, 140 40" stroke="#ddd" stroke-width="3" fill="none" opacity="0.6"/>
+</svg>

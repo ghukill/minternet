@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base Tag Abuse - Wowser</title>
+    <!-- This base tag changes how all relative URLs are resolved! -->
+    <base href="{{ public_base_url }}/static/">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="{{ public_base_url }}/">WOWSER</a></h1>
+        <p class="tagline">Base Tag Abuse Demo</p>
+    </header>
+
+    <main>
+        <div class="warning-box">
+            <strong>&lt;base&gt; Tag Demo</strong>
+            <p>This page sets <code>&lt;base href="{{ public_base_url }}/static/"&gt;</code></p>
+            <p>All relative URLs are now resolved against this base, not the page URL!</p>
+        </div>
+
+        <h2>How Base Tags Work</h2>
+        <p>The <code>&lt;base&gt;</code> element specifies the base URL for all relative URLs in a document.</p>
+
+        <h3>Without Base Tag</h3>
+        <ul>
+            <li><code>href="style.css"</code> → <code>/base-demo/style.css</code></li>
+            <li><code>href="images/photo.jpg"</code> → <code>/base-demo/images/photo.jpg</code></li>
+        </ul>
+
+        <h3>With Base Tag (this page)</h3>
+        <ul>
+            <li><code>href="style.css"</code> → <code>{{ public_base_url }}/static/style.css</code></li>
+            <li><code>href="images/photo.jpg"</code> → <code>{{ public_base_url }}/static/images/photo.jpg</code></li>
+        </ul>
+
+        <h3>Why This Breaks Archives</h3>
+        <ul>
+            <li>Archive URL rewriting must account for the base tag</li>
+            <li>The base URL may be an absolute URL (like on this page)</li>
+            <li>Replay systems must rewrite the base tag itself</li>
+            <li>Some tools miss this and fail to load resources</li>
+        </ul>
+
+        <h3>Test Links</h3>
+        <p>These links use the base URL for resolution:</p>
+        <ul>
+            <li><a href="test.html">Relative: test.html</a> (resolves to /static/test.html)</li>
+            <li><a href="../">Parent: ../</a> (resolves to /)</li>
+            <li><a href="{{ public_base_url }}/">Absolute: Full URL</a> (unchanged)</li>
+        </ul>
+
+        <p><a href="{{ public_base_url }}/">← Back to Museum</a></p>
+    </main>
+
+    <footer>
+        <p>Wowser - A teaching example for web archiving edge cases</p>
+    </footer>
+</body>
+</html>

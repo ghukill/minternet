@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Calendar - {{ month_name }} {{ year }}{% endblock %}
+
+{% block content %}
+<h2>Calendar</h2>
+
+<div class="trap-warning">
+    ⚠️ <strong>Crawler Trap:</strong> This calendar can be navigated infinitely into the past and future.
+    A naive crawler will follow these links forever!
+</div>
+
+<div class="calendar-nav">
+    <a href="/calendar?year={{ year }}&month={{ month - 1 }}">&larr; Previous Month</a>
+    <span class="current-month">{{ month_name }} {{ year }}</span>
+    <a href="/calendar?year={{ year }}&month={{ month + 1 }}">Next Month &rarr;</a>
+</div>
+
+<table class="calendar">
+    <thead>
+        <tr>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+            <th>Sun</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for week in calendar %}
+        <tr>
+            {% for day in week %}
+            <td>
+                {% if day != 0 %}
+                    {{ day }}
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="calendar-links">
+    <h3>Quick Navigation (More Traps!)</h3>
+    <p>
+        <a href="/calendar?year={{ year - 10 }}&month={{ month }}">10 years ago</a> |
+        <a href="/calendar?year={{ year - 1 }}&month={{ month }}">Last year</a> |
+        <a href="/calendar?year={{ year + 1 }}&month={{ month }}">Next year</a> |
+        <a href="/calendar?year={{ year + 10 }}&month={{ month }}">10 years from now</a>
+    </p>
+    <p>
+        <a href="/calendar?year=1990&month=1">1990</a> |
+        <a href="/calendar?year=2000&month=1">2000</a> |
+        <a href="/calendar?year=2050&month=1">2050</a> |
+        <a href="/calendar?year=3000&month=1">3000</a>
+    </p>
+</div>
+
+{% if posts %}
+<h3>Posts from {{ month_name }} {{ year }}</h3>
+{% for post in posts %}
+<article class="post-preview">
+    <h4><a href="/post/{{ post.slug }}">{{ post.title }}</a></h4>
+    <p class="meta">{{ post.date }}</p>
+</article>
+{% endfor %}
+{% else %}
+<p class="no-posts">No posts from this month.</p>
+{% endif %}
+
+<p class="archive-link">
+    <a href="/archive/{{ year }}/{{ month }}">View archive for {{ month_name }} {{ year }}</a>
+</p>
+{% endblock %}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Refresh Loop - Wowser</title>
+    {% if count < 5 %}
+    <meta http-equiv="refresh" content="3;url=/refresh-loop?count={{ count + 1 }}">
+    {% endif %}
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/">WOWSER</a></h1>
+        <p class="tagline">Meta Refresh Demo</p>
+    </header>
+
+    <main>
+        <div class="warning-box">
+            <strong>Auto-Refresh Active!</strong>
+            {% if count < 5 %}
+            <p>This page will automatically redirect in 3 seconds...</p>
+            {% else %}
+            <p>Refresh loop stopped after 5 iterations.</p>
+            {% endif %}
+        </div>
+
+        <h2>Refresh Count: {{ count }}</h2>
+
+        <div class="progress">
+            {% for i in range(5) %}
+            <span class="step {% if i < count %}completed{% elif i == count %}current{% endif %}">
+                {{ i + 1 }}
+            </span>
+            {% endfor %}
+        </div>
+
+        {% if count < 5 %}
+        <p>Redirecting to: <code>/refresh-loop?count={{ count + 1 }}</code></p>
+        <p><a href="/">Cancel and return to Museum</a></p>
+        {% else %}
+        <p style="color: green;">Loop completed! The page stopped refreshing.</p>
+        <p><a href="/refresh-loop">Start over</a></p>
+        {% endif %}
+
+        <h2>Why This Is Problematic</h2>
+        <ul>
+            <li><code>&lt;meta http-equiv="refresh"&gt;</code> causes automatic redirects</li>
+            <li>Crawlers must decide whether to follow these</li>
+            <li>Some sites use this for infinite loops</li>
+            <li>Can cause crawlers to get stuck</li>
+        </ul>
+
+        <h2>How Crawlers Handle This</h2>
+        <ul>
+            <li>Set maximum redirect depth</li>
+            <li>Track redirect chains</li>
+            <li>Detect loops via URL patterns</li>
+            <li>Timeout on excessive redirects</li>
+        </ul>
+
+        <p><a href="/">← Back to Museum</a></p>
+    </main>
+
+    <footer>
+        <p>Wowser - A teaching example for web archiving edge cases</p>
+    </footer>
+
+    <style>
+        .progress {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        .step {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        .step.completed {
+            background: #4caf50;
+            color: white;
+        }
+        .step.current {
+            background: #667eea;
+            color: white;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+    </style>
+</body>
+</html>

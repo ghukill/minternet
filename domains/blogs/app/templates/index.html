@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2>Recent Posts</h2>
+
+{% for post in posts %}
+<article class="post-preview">
+    <h3><a href="/post/{{ post.slug }}">{{ post.title }}</a></h3>
+    <p class="meta">
+        By <a href="/author/{{ post.author }}">{{ authors[post.author].name }}</a>
+        on {{ post.date }}
+    </p>
+    <p>{{ post.excerpt }}</p>
+    <a href="/post/{{ post.slug }}" class="read-more">Read more →</a>
+</article>
+{% endfor %}
+
+<div class="cta-box">
+    <h3>Explore the Archive</h3>
+    <p>Browse posts by date using our <a href="/calendar">calendar view</a> or <a href="/search">search</a> for specific topics.</p>
+</div>
+{% endblock %}

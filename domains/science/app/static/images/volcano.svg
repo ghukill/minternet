@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <!-- Volcano base -->
+  <polygon points="100,50 30,180 170,180" fill="#8B4513"/>
+  <polygon points="100,50 60,180 140,180" fill="#A0522D"/>
+
+  <!-- Crater -->
+  <ellipse cx="100" cy="55" rx="20" ry="8" fill="#4a3728"/>
+
+  <!-- Eruption bubbles -->
+  <circle cx="95" cy="35" r="8" fill="#FF6B35" opacity="0.9"/>
+  <circle cx="105" cy="28" r="6" fill="#FF4500" opacity="0.8"/>
+  <circle cx="90" cy="20" r="5" fill="#FFD700" opacity="0.7"/>
+  <circle cx="110" cy="15" r="4" fill="#FF6347" opacity="0.6"/>
+  <circle cx="100" cy="8" r="3" fill="#FFA500" opacity="0.5"/>
+
+  <!-- Lava drips -->
+  <path d="M85,55 Q80,80 75,100" stroke="#FF4500" stroke-width="4" fill="none"/>
+  <path d="M115,55 Q120,75 125,95" stroke="#FF6347" stroke-width="3" fill="none"/>
+
+  <!-- Ground -->
+  <rect x="0" y="175" width="200" height="25" fill="#228B22"/>
+</svg>

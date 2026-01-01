@@ -1,0 +1,11 @@
+date,experiment_id,observer,temperature_c,humidity_pct,notes
+2024-01-15,1,alice,22.5,45,Eruption lasted 15 seconds with good foam height
+2024-01-16,2,bob,21.0,50,Crystals forming after 24 hours visible on string
+2024-01-18,2,bob,20.5,52,Crystal growth accelerating - approximately 2mm diameter
+2024-01-20,3,charlie,23.0,40,Synchronized pendulum pattern achieved after 30 seconds
+2024-01-22,4,alice,24.0,55,Bean sprout emerged from soil - day 5
+2024-01-25,4,alice,23.5,58,Plant has navigated first corner of maze
+2024-02-01,5,charlie,21.5,35,Low humidity improved static effects significantly
+2024-02-05,1,bob,22.0,48,Red food coloring created dramatic visual effect
+2024-02-10,2,alice,19.5,45,Larger crystals with slower cooling rate confirmed
+2024-02-15,3,charlie,22.5,42,Video captured complete wave pattern cycle

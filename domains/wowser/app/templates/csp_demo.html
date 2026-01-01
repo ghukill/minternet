@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSP Issues - Wowser</title>
+    <!-- Inline styles will be blocked by CSP! -->
+    <style>
+        .should-be-red { color: red; }
+    </style>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/">WOWSER</a></h1>
+        <p class="tagline">Content Security Policy Demo</p>
+    </header>
+
+    <main>
+        <div class="warning-box">
+            <strong>CSP Header Active</strong>
+            <p>This page is served with a restrictive Content-Security-Policy header:</p>
+            <code>default-src 'self'; script-src 'self'; style-src 'self'</code>
+        </div>
+
+        <h2>What's Broken?</h2>
+
+        <div class="test-item">
+            <h3>Inline Styles</h3>
+            <p class="should-be-red">This text should be red if inline styles worked. (They won't!)</p>
+            <p>The <code>&lt;style&gt;</code> block in the head is blocked by <code>style-src 'self'</code></p>
+        </div>
+
+        <div class="test-item">
+            <h3>Inline Scripts</h3>
+            <p id="inline-script-test">This text was NOT modified by an inline script.</p>
+            <script>
+                document.getElementById('inline-script-test').textContent = 'This text WAS modified by an inline script!';
+            </script>
+            <p>The inline <code>&lt;script&gt;</code> above is blocked by <code>script-src 'self'</code></p>
+        </div>
+
+        <div class="test-item">
+            <h3>Event Handlers</h3>
+            <button onclick="alert('Hello!')">Click me (won't work)</button>
+            <p>Inline event handlers are also blocked by the CSP.</p>
+        </div>
+
+        <h2>Why This Matters for Archives</h2>
+        <ul>
+            <li>Web archive replay systems inject JavaScript (like wombat.js)</li>
+            <li>These scripts intercept and rewrite URLs</li>
+            <li>Strict CSP headers can block the replay scripts!</li>
+            <li>Archives may need to strip or modify CSP headers</li>
+        </ul>
+
+        <h2>Archive Solutions</h2>
+        <ul>
+            <li>Remove CSP headers during replay</li>
+            <li>Modify CSP to allow archive scripts</li>
+            <li>Add nonces or hashes for archive scripts</li>
+            <li>Document which sites have problematic CSP</li>
+        </ul>
+
+        <p><a href="/">← Back to Museum</a></p>
+    </main>
+
+    <footer>
+        <p>Wowser - A teaching example for web archiving edge cases</p>
+    </footer>
+</body>
+</html>

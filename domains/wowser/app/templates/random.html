@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random URLs - Wowser</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/">WOWSER</a></h1>
+        <p class="tagline">Randomized URLs Demo</p>
+    </header>
+
+    <main>
+        <div class="warning-box">
+            <strong>Crawler Trap: Random URLs</strong>
+            <p>Each page load generates completely new links. A crawler will never finish!</p>
+        </div>
+
+        <h2>Current Path</h2>
+        <p><code>/random/{% if current_path %}{{ current_path }}{% else %}(root){% endif %}</code></p>
+
+        <h2>Discover More Pages</h2>
+        <p>Click any link to discover a new randomly-generated page:</p>
+        <ul class="random-links">
+            {% for link in random_links %}
+            <li><a href="{{ link }}">{{ link }}</a></li>
+            {% endfor %}
+        </ul>
+
+        <h2>Why This Is Problematic</h2>
+        <ul>
+            <li>Every page response contains new, unique URLs</li>
+            <li>There's no way to know when you've "finished" crawling</li>
+            <li>A naive crawler will follow links forever</li>
+            <li>Similar patterns exist on real sites (session IDs, tokens, etc.)</li>
+        </ul>
+
+        <h2>Solutions for Crawlers</h2>
+        <ul>
+            <li>Set a maximum crawl depth</li>
+            <li>Use URL pattern matching to detect traps</li>
+            <li>Limit pages per path prefix</li>
+            <li>Use scope definitions (e.g., "only /blog/* paths")</li>
+        </ul>
+
+        <p><a href="/">← Back to Museum</a></p>
+    </main>
+
+    <footer>
+        <p>Wowser - A teaching example for web archiving edge cases</p>
+    </footer>
+</body>
+</html>

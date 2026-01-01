@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Large Inline Script - Wowser</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/">WOWSER</a></h1>
+        <p class="tagline">Large Inline Script Demo</p>
+    </header>
+
+    <main>
+        <div class="warning-box">
+            <strong>Performance Warning</strong>
+            <p>This page contains a very large inline JavaScript block. It may take a moment to parse.</p>
+        </div>
+
+        <h2>Large Script Test</h2>
+        <p id="status">Script loading...</p>
+        <div id="output"></div>
+
+        <h2>Why Large Scripts Matter for Archives</h2>
+        <ul>
+            <li>Inline scripts can be very large (megabytes)</li>
+            <li>Archive tools must parse entire HTML</li>
+            <li>Script rewriting can be computationally expensive</li>
+            <li>May timeout during capture or replay</li>
+        </ul>
+
+        <p><a href="/">← Back to Museum</a></p>
+    </main>
+
+    <footer>
+        <p>Wowser - A teaching example for web archiving edge cases</p>
+    </footer>
+
+    {% raw %}<script>
+        // This script generates a lot of data to simulate a large bundle
+
+        // Large lookup table (common in bundled JS)
+        const LOOKUP_TABLE = {};
+        for (let i = 0; i < 10000; i++) {
+            LOOKUP_TABLE['key_' + i] = {
+                id: i,
+                name: 'Item ' + i,
+                description: 'This is a description for item number ' + i + '. It contains some text to make the script larger.',
+                tags: ['tag1', 'tag2', 'tag3'],
+                metadata: {
+                    created: Date.now(),
+                    modified: Date.now(),
+                    version: '1.0.' + i
+                }
+            };
+        }
+
+        // Large array of strings (common in i18n bundles)
+        const STRINGS = [];
+        const words = ['web', 'archive', 'preservation', 'digital', 'capture', 'replay', 'crawl', 'warc', 'script'];
+        for (let i = 0; i < 5000; i++) {
+            STRINGS.push(words[i % words.length] + '_' + i + ': "' + words[i % words.length].toUpperCase() + ' ' + i + '"');
+        }
+
+        // Complex nested structure
+        function generateNestedObject(depth, breadth) {
+            if (depth === 0) return { value: Math.random() };
+            const obj = {};
+            for (let i = 0; i < breadth; i++) {
+                obj['child_' + i] = generateNestedObject(depth - 1, breadth);
+            }
+            return obj;
+        }
+        const NESTED = generateNestedObject(5, 4);
+
+        // Long function with many statements
+        function processData() {
+            let result = 0;
+            for (let i = 0; i < 1000; i++) {
+                result += Math.sin(i) * Math.cos(i);
+                result = Math.abs(result) % 1000;
+            }
+            return result;
+        }
+
+        // More functions to increase script size
+        function helperOne(a, b) { return a + b; }
+        function helperTwo(a, b) { return a * b; }
+        function helperThree(a, b) { return a - b; }
+        function helperFour(a, b) { return a / b; }
+
+        // Large regex patterns (common in parsers)
+        const PATTERNS = [
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+            /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/,
+            /^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\.[0-9]{3})?Z?$/,
+            /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+        ];
+
+        // Template strings (common in frontend frameworks)
+        const TEMPLATES = {
+            header: `<header class="main-header"><h1>{{title}}</h1><nav>{{navigation}}</nav></header>`,
+            footer: `<footer class="main-footer"><p>{{copyright}}</p></footer>`,
+            card: `<div class="card"><h2>{{title}}</h2><p>{{description}}</p><a href="{{link}}">Learn more</a></div>`,
+            list: `<ul class="item-list">{{#items}}<li>{{name}}: {{value}}</li>{{/items}}</ul>`,
+            modal: `<div class="modal" id="{{id}}"><div class="modal-content"><span class="close">&times;</span><h2>{{title}}</h2><div>{{content}}</div></div></div>`
+        };
+
+        // Actually do something visible
+        document.getElementById('status').textContent = 'Script loaded and executed!';
+        document.getElementById('output').innerHTML = `
+            <p><strong>Script Statistics:</strong></p>
+            <ul>
+                <li>Lookup table entries: ${Object.keys(LOOKUP_TABLE).length}</li>
+                <li>String entries: ${STRINGS.length}</li>
+                <li>Regex patterns: ${PATTERNS.length}</li>
+                <li>Template count: ${Object.keys(TEMPLATES).length}</li>
+                <li>Calculation result: ${processData()}</li>
+            </ul>
+            <p style="color: green;">✓ This large script executed successfully!</p>
+        `;
+
+        console.log('Large script demo: Generated', Object.keys(LOOKUP_TABLE).length, 'lookup entries');
+    </script>{% endraw %}
+</body>
+</html>

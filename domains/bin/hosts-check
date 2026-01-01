@@ -1,0 +1,38 @@
+#!/bin/bash
+# Check for required /etc/hosts entries for the mini-internet
+
+HOSTS_FILE="/etc/hosts"
+REQUIRED_HOSTS=("recipes.test" "science.test" "blogs.test" "wowser.test")
+MISSING=()
+
+echo "Checking /etc/hosts for mini-internet entries..."
+echo
+
+for host in "${REQUIRED_HOSTS[@]}"; do
+    if grep -q "127.0.0.1.*$host" "$HOSTS_FILE" 2>/dev/null; then
+        echo "  [OK] $host"
+    else
+        echo "  [MISSING] $host"
+        MISSING+=("$host")
+    fi
+done
+
+echo
+
+if [ ${#MISSING[@]} -eq 0 ]; then
+    echo "All required hosts are configured!"
+    exit 0
+else
+    echo "Missing entries. Add the following lines to /etc/hosts:"
+    echo
+    for host in "${MISSING[@]}"; do
+        echo "127.0.0.1 $host"
+    done
+    echo
+    echo "You can add them with:"
+    echo "  sudo nano /etc/hosts"
+    echo
+    echo "Or copy-paste this command (requires sudo):"
+    echo "  echo -e '$(for h in "${MISSING[@]}"; do echo "127.0.0.1 $h"; done | tr '\n' '\\n')' | sudo tee -a /etc/hosts"
+    exit 1
+fi

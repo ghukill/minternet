@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<article class="post-full">
+    <h2>{{ post.title }}</h2>
+    <p class="meta">
+        By <a href="/author/{{ post.author }}">{{ author.name }}</a>
+        on {{ post.date }}
+    </p>
+
+    <div class="content">
+        {{ post.content | replace('\n\n', '</p><p>') | safe }}
+    </div>
+
+    <div class="post-footer">
+        <p><a href="/">← Back to home</a></p>
+        <p>
+            View archive:
+            <a href="/archive/{{ post.date[:4] }}/{{ post.date[5:7] | int }}">
+                {{ post.date[:7] }}
+            </a>
+        </p>
+    </div>
+</article>
+
+<section class="related">
+    <h3>More from {{ author.name.split()[0] }}</h3>
+    <p><a href="/author/{{ post.author }}">View all posts by this author →</a></p>
+</section>
+{% endblock %}

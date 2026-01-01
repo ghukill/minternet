@@ -1,0 +1,11 @@
+id,title,category,difficulty,materials_count,estimated_time_minutes
+1,Baking Soda Volcano,Chemistry,Easy,4,30
+2,Crystal Growing,Chemistry,Medium,5,4320
+3,Pendulum Waves,Physics,Medium,4,60
+4,Plant Maze,Biology,Easy,5,10080
+5,Static Electricity,Physics,Easy,5,15
+6,Magnetic Field Mapping,Physics,Medium,3,45
+7,DNA Extraction,Biology,Medium,6,90
+8,Density Tower,Chemistry,Easy,5,20
+9,Solar System Model,Astronomy,Hard,8,180
+10,Water Filtration,Environmental,Medium,7,60

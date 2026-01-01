@@ -1,0 +1,20 @@
+{
+  "name": "blogs",
+  "domain": "minternet-blogs",
+  "service_port": 8003,
+  "image": "minternet/blogs",
+  "container_port": 80,
+  "public": true,
+  "env": {
+    "PUBLIC_HOST": "minternet-blogs.exe.xyz",
+    "PUBLIC_SCHEME": "https",
+    "SCIENCE_HOST": "minternet-science.exe.xyz",
+    "SCIENCE_SCHEME": "https"
+  },
+  "local_env": {
+    "PUBLIC_HOST": "blogs.test",
+    "PUBLIC_SCHEME": "http",
+    "SCIENCE_HOST": "science.test",
+    "SCIENCE_SCHEME": "http"
+  }
+}

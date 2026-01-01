@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Science Lab - {{ public_host }}</title>
+    <!-- Tailwind CSS from CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .loading { opacity: 0.5; }
+        .error { color: #dc2626; background: #fef2f2; padding: 1rem; border-radius: 0.5rem; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <header class="bg-indigo-600 text-white py-6">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold">Science Lab</h1>
+            <p class="mt-2 opacity-80">Interactive experiments for curious minds</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- Featured Section - loaded via absolute URL (will break in replay) -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Featured Experiment</h2>
+            <div id="featured" class="bg-white rounded-lg shadow p-6">
+                <p class="text-gray-500">Loading featured experiment...</p>
+            </div>
+        </section>
+
+        <!-- All Experiments - loaded via relative URL (should work in replay) -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">All Experiments</h2>
+            <div id="experiments" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <p class="text-gray-500">Loading experiments...</p>
+            </div>
+        </section>
+
+        <!-- Experiment Detail Modal -->
+        <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+            <div class="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4 p-6">
+                <div id="modal-content">
+                    <p class="text-gray-500">Loading...</p>
+                </div>
+                <button onclick="closeModal()" class="mt-4 bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded">
+                    Close
+                </button>
+            </div>
+        </div>
+
+        <!-- Resources Section - Images, Data, Documents -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Lab Resources</h2>
+
+            <!-- Experiment Diagrams -->
+            <div class="bg-white rounded-lg shadow p-6 mb-4">
+                <h3 class="text-lg font-semibold text-indigo-600 mb-4">Experiment Diagrams</h3>
+                <div class="grid gap-4 md:grid-cols-3">
+                    <div class="text-center">
+                        <img src="/static/images/volcano.svg" alt="Volcano Experiment" class="mx-auto h-32 w-32">
+                        <p class="mt-2 text-sm text-gray-600">Baking Soda Volcano</p>
+                    </div>
+                    <div class="text-center">
+                        <img src="/static/images/crystal.svg" alt="Crystal Growing" class="mx-auto h-32 w-32">
+                        <p class="mt-2 text-sm text-gray-600">Crystal Growing</p>
+                    </div>
+                    <div class="text-center">
+                        <img src="/static/images/pendulum.svg" alt="Pendulum Waves" class="mx-auto h-32 w-32">
+                        <p class="mt-2 text-sm text-gray-600">Pendulum Waves</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Downloads -->
+            <div class="bg-white rounded-lg shadow p-6 mb-4">
+                <h3 class="text-lg font-semibold text-indigo-600 mb-4">Research Data</h3>
+                <div class="grid gap-4 md:grid-cols-2">
+                    <a href="/static/data/experiments.csv" class="flex items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                        <span class="text-2xl mr-3">📊</span>
+                        <div>
+                            <p class="font-medium">Experiments Catalog</p>
+                            <p class="text-sm text-gray-500">CSV - Metadata for all experiments</p>
+                        </div>
+                    </a>
+                    <a href="/static/data/observations.csv" class="flex items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                        <span class="text-2xl mr-3">📈</span>
+                        <div>
+                            <p class="font-medium">Observation Log</p>
+                            <p class="text-sm text-gray-500">CSV - Recorded experimental results</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Documents -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold text-indigo-600 mb-4">Documentation</h3>
+                <a href="/static/documents/safety-guide.pdf" class="flex items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                    <span class="text-2xl mr-3">📄</span>
+                    <div>
+                        <p class="font-medium">Laboratory Safety Guide</p>
+                        <p class="text-sm text-gray-500">PDF - Essential safety procedures for all experiments</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Debug Info -->
+        <section class="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <h3 class="font-semibold text-yellow-800">Web Archiving Notes</h3>
+            <p class="text-sm text-yellow-700 mt-2">
+                This page demonstrates why client-side JavaScript rewriting is needed for web archives:
+            </p>
+            <ul class="text-sm text-yellow-700 mt-2 list-disc list-inside">
+                <li><strong>Featured section:</strong> Uses <code>fetch()</code> with an <em>absolute URL</em> - will break in replay</li>
+                <li><strong>Experiments list:</strong> Uses <code>fetch()</code> with a <em>relative URL</em> - should work</li>
+                <li><strong>Experiment detail:</strong> Dynamically creates DOM elements</li>
+                <li>All content is loaded via JavaScript, not server-rendered HTML</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-4 mt-8">
+        <div class="container mx-auto px-4 text-center text-sm">
+            <p>Science Lab - A teaching example for web archiving</p>
+        </div>
+    </footer>
+
+    <script>
+        window.PUBLIC_HOST = "{{ public_host }}";
+        window.PUBLIC_SCHEME = "{{ public_scheme }}";
+    </script>
+    <script src="/static/app.js"></script>
+</body>
+</html>

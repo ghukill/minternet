@@ -1,0 +1,286 @@
+/* Wowser - Museum of Strange Websites */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    background: #0f0f23;
+    color: #cccccc;
+    min-height: 100vh;
+}
+
+a {
+    color: #00cc00;
+}
+
+a:hover {
+    color: #00ff00;
+}
+
+header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border-bottom: 2px solid #00cc00;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 3em;
+    color: #00ff00;
+    text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    letter-spacing: 0.2em;
+}
+
+header h1 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+header .tagline {
+    color: #888;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+h2 {
+    color: #00cc00;
+    margin: 30px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #333;
+}
+
+h3 {
+    color: #00aa00;
+    margin: 20px 0 10px;
+}
+
+.intro {
+    background: #1a1a2e;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border-left: 4px solid #00cc00;
+}
+
+.warning {
+    color: #ffcc00;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+/* Exhibits grid */
+.exhibits {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+.exhibit {
+    background: #1a1a2e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.exhibit:hover {
+    border-color: #00cc00;
+    box-shadow: 0 0 20px rgba(0, 204, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.exhibit h3 {
+    margin-top: 0;
+}
+
+.exhibit h3 a {
+    text-decoration: none;
+}
+
+.exhibit p {
+    color: #888;
+    font-size: 0.9em;
+    margin: 10px 0;
+}
+
+.tag {
+    display: inline-block;
+    background: #333;
+    color: #00cc00;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    margin-right: 5px;
+    margin-top: 10px;
+}
+
+/* Warning box */
+.warning-box {
+    background: #332200;
+    border: 1px solid #ff9900;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.warning-box strong {
+    color: #ff9900;
+}
+
+.warning-box p {
+    margin-top: 10px;
+}
+
+.warning-box code {
+    background: #1a1a2e;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: monospace;
+}
+
+/* Notes section */
+.notes {
+    background: #1a1a2e;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 40px;
+}
+
+.notes ul {
+    margin: 15px 0 0 20px;
+}
+
+.notes li {
+    margin-bottom: 8px;
+}
+
+/* SPA navigation */
+.spa-nav {
+    display: flex;
+    gap: 15px;
+    background: #1a1a2e;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.spa-nav a {
+    padding: 8px 16px;
+    background: #333;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.spa-nav a:hover {
+    background: #00cc00;
+    color: #000;
+}
+
+.spa-info {
+    background: #1a1a2e;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+.spa-info code {
+    background: #333;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* Random links */
+.random-links {
+    list-style: none;
+    margin: 20px 0;
+}
+
+.random-links li {
+    margin: 10px 0;
+}
+
+.random-links a {
+    display: inline-block;
+    background: #1a1a2e;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: 1px solid #333;
+    text-decoration: none;
+    font-family: monospace;
+}
+
+.random-links a:hover {
+    border-color: #00cc00;
+    background: #16213e;
+}
+
+/* Test items */
+.test-item {
+    background: #1a1a2e;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.test-item button {
+    background: #333;
+    border: 1px solid #00cc00;
+    color: #00cc00;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Footer */
+footer {
+    background: #0a0a15;
+    border-top: 1px solid #333;
+    padding: 20px;
+    text-align: center;
+    color: #666;
+    margin-top: 40px;
+}
+
+/* Lists */
+ul {
+    margin: 15px 0 15px 25px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* Code blocks */
+code {
+    background: #333;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #00cc00;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 2em;
+    }
+
+    .exhibits {
+        grid-template-columns: 1fr;
+    }
+
+    .spa-nav {
+        flex-wrap: wrap;
+    }
+}

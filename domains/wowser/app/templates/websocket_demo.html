@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Demo - Wowser</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/">WOWSER</a></h1>
+        <p class="tagline">WebSocket Demo</p>
+    </header>
+
+    <main>
+        <div class="warning-box">
+            <strong>WebSocket Attempt</strong>
+            <p>This page attempts to open a WebSocket connection. It will fail (no server), but demonstrates the pattern.</p>
+        </div>
+
+        <h2>Connection Status</h2>
+        <div id="status" class="status-box">
+            Initializing...
+        </div>
+
+        <h2>Message Log</h2>
+        <div id="log" class="log-box">
+            <p class="log-entry">Waiting for connection...</p>
+        </div>
+
+        <h2>Why WebSockets Can't Be Archived</h2>
+        <ul>
+            <li>WebSockets are persistent, bidirectional connections</li>
+            <li>They're stateful and real-time</li>
+            <li>Content depends on server-side state</li>
+            <li>No way to "replay" an interactive connection</li>
+        </ul>
+
+        <h2>What Archives Can Do</h2>
+        <ul>
+            <li>Capture the initial HTML/JS that sets up the connection</li>
+            <li>Stub out WebSocket to return mock data</li>
+            <li>Show error message explaining limitation</li>
+            <li>Capture HTTP fallback if site has one</li>
+        </ul>
+
+        <p><a href="/">← Back to Museum</a></p>
+    </main>
+
+    <footer>
+        <p>Wowser - A teaching example for web archiving edge cases</p>
+    </footer>
+
+    <style>
+        .status-box {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .status-box.connecting { background: #fff3cd; color: #856404; }
+        .status-box.connected { background: #d4edda; color: #155724; }
+        .status-box.error { background: #f8d7da; color: #721c24; }
+        .log-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .log-entry { margin: 5px 0; }
+        .log-entry.error { color: #f48771; }
+        .log-entry.success { color: #89d185; }
+        .log-entry.info { color: #75beff; }
+    </style>
+
+    <script>
+        const statusEl = document.getElementById('status');
+        const logEl = document.getElementById('log');
+
+        function log(message, type = 'info') {
+            const entry = document.createElement('p');
+            entry.className = 'log-entry ' + type;
+            entry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logEl.appendChild(entry);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        function setStatus(status, message) {
+            statusEl.className = 'status-box ' + status;
+            statusEl.textContent = message;
+        }
+
+        // Clear initial content
+        logEl.innerHTML = '';
+
+        // Attempt WebSocket connection
+        log('Attempting WebSocket connection...', 'info');
+        setStatus('connecting', 'Connecting...');
+
+        try {
+            // This will fail since there's no WebSocket server
+            const ws = new WebSocket('{{ public_ws_url }}');
+
+            ws.onopen = function() {
+                log('Connection opened!', 'success');
+                setStatus('connected', 'Connected');
+                ws.send('Hello from the client!');
+            };
+
+            ws.onmessage = function(event) {
+                log('Received: ' + event.data, 'success');
+            };
+
+            ws.onerror = function(error) {
+                log('WebSocket error occurred', 'error');
+                setStatus('error', 'Connection Failed');
+            };
+
+            ws.onclose = function(event) {
+                log(`Connection closed (code: ${event.code})`, 'error');
+                log('This is expected - there is no WebSocket server!', 'info');
+                log('In a web archive replay, WebSockets cannot work.', 'info');
+            };
+
+        } catch (error) {
+            log('Error creating WebSocket: ' + error.message, 'error');
+            setStatus('error', 'Failed to Create WebSocket');
+        }
+
+        // Also try to show what a working WebSocket might do
+        setTimeout(() => {
+            log('---', 'info');
+            log('In a real application, you might see messages like:', 'info');
+            log('  → User joined: alice', 'success');
+            log('  → alice: Hello everyone!', 'success');
+            log('  → Server: 5 users online', 'success');
+            log('But none of this can be captured in a web archive.', 'error');
+        }, 2000);
+    </script>
+</body>
+</html>

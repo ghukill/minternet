@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Tracked Page{% endblock %}
+
+{% block content %}
+<h2>Session Tracking Demo</h2>
+
+<div class="trap-warning">
+    ⚠️ <strong>Crawler Trap:</strong> Each visit generates a unique tracking ID in the URL.
+    A crawler sees infinite unique URLs!
+</div>
+
+<div class="tracking-info">
+    <p>Your tracking ID: <code>{{ tracking_id }}</code></p>
+    <p>Session ID: <code>{{ session_id }}</code></p>
+</div>
+
+<p>This page demonstrates URL-based session tracking, a common pattern that causes problems for web crawlers.</p>
+
+<h3>Example Tracked Links</h3>
+<p>Each of these links has a different tracking parameter:</p>
+<ul>
+    <li><a href="/track?tid=abc123">Link with tid=abc123</a></li>
+    <li><a href="/track?tid=xyz789">Link with tid=xyz789</a></li>
+    <li><a href="/track?tid={{ session_id }}-1">Link with tid={{ session_id }}-1</a></li>
+    <li><a href="/track?tid={{ session_id }}-2">Link with tid={{ session_id }}-2</a></li>
+</ul>
+
+<p>To a crawler, each of these is a unique URL, even though they all show the same content.</p>
+
+<p><a href="/">← Back to home</a></p>
+{% endblock %}

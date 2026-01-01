@@ -1,0 +1,16 @@
+{
+  "name": "recipes",
+  "domain": "minternet-recipes",
+  "service_port": 8001,
+  "image": "minternet/recipes",
+  "container_port": 80,
+  "public": true,
+  "env": {
+    "PUBLIC_HOST": "minternet-recipes.exe.xyz",
+    "PUBLIC_SCHEME": "https"
+  },
+  "local_env": {
+    "PUBLIC_HOST": "recipes.test",
+    "PUBLIC_SCHEME": "http"
+  }
+}

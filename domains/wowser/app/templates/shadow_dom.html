@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow DOM - Wowser</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1><a href="/">WOWSER</a></h1>
+        <p class="tagline">Shadow DOM Demo</p>
+    </header>
+
+    <main>
+        <div class="warning-box">
+            <strong>Shadow DOM Components</strong>
+            <p>This page uses Shadow DOM to encapsulate content. The content inside shadow roots is harder to capture.</p>
+        </div>
+
+        <h2>Custom Elements with Shadow DOM</h2>
+
+        <div id="shadow-host-1" class="shadow-container">
+            <p>Fallback content (shown if JS fails)</p>
+        </div>
+
+        <div id="shadow-host-2" class="shadow-container">
+            <p>Fallback content (shown if JS fails)</p>
+        </div>
+
+        <h2>Why Shadow DOM Is Challenging</h2>
+        <ul>
+            <li>Content is not in the initial HTML</li>
+            <li>Shadow roots are created via JavaScript</li>
+            <li>Styles are encapsulated (can't access from outside)</li>
+            <li>Traditional HTML capture misses shadow content</li>
+        </ul>
+
+        <h2>Capture Strategies</h2>
+        <ul>
+            <li>Use browser-based capture (Browsertrix, etc.)</li>
+            <li>Wait for JavaScript to execute before capture</li>
+            <li>Serialize shadow DOM during capture</li>
+            <li>Some tools can "pierce" shadow boundaries</li>
+        </ul>
+
+        <h2>Try Inspecting</h2>
+        <p>Open DevTools and inspect the elements above. You'll see <code>#shadow-root</code> which contains the actual content.</p>
+
+        <p><a href="/">← Back to Museum</a></p>
+    </main>
+
+    <footer>
+        <p>Wowser - A teaching example for web archiving edge cases</p>
+    </footer>
+
+    <style>
+        .shadow-container {
+            border: 2px dashed #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+    </style>
+
+    <script>
+        // Create custom element with Shadow DOM
+        class InfoCard extends HTMLElement {
+            constructor() {
+                super();
+                const shadow = this.attachShadow({ mode: 'open' });
+
+                // Styles encapsulated in shadow DOM
+                const style = document.createElement('style');
+                style.textContent = `
+                    :host {
+                        display: block;
+                    }
+                    .card {
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        padding: 20px;
+                        border-radius: 8px;
+                    }
+                    h3 {
+                        margin: 0 0 10px 0;
+                    }
+                    p {
+                        margin: 0;
+                        opacity: 0.9;
+                    }
+                    .hidden-text {
+                        font-size: 12px;
+                        margin-top: 15px;
+                        padding-top: 10px;
+                        border-top: 1px solid rgba(255,255,255,0.3);
+                    }
+                `;
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <h3>${this.getAttribute('title') || 'Card Title'}</h3>
+                    <p>${this.getAttribute('description') || 'Card description'}</p>
+                    <p class="hidden-text">This content is inside a Shadow DOM. It won't appear in a simple HTML capture!</p>
+                `;
+
+                shadow.appendChild(style);
+                shadow.appendChild(card);
+            }
+        }
+
+        customElements.define('info-card', InfoCard);
+
+        // Attach shadow DOM to existing elements
+        const host1 = document.getElementById('shadow-host-1');
+        const shadow1 = host1.attachShadow({ mode: 'open' });
+        shadow1.innerHTML = `
+            <style>
+                .content { background: #f0f8ff; padding: 20px; border-radius: 8px; }
+                h3 { color: #667eea; }
+            </style>
+            <div class="content">
+                <h3>Shadow DOM Content #1</h3>
+                <p>This content was created inside a shadow root.</p>
+                <p>If you view the page source, you won't see this text!</p>
+            </div>
+        `;
+
+        const host2 = document.getElementById('shadow-host-2');
+        const shadow2 = host2.attachShadow({ mode: 'open' });
+        shadow2.innerHTML = `
+            <style>
+                .fancy {
+                    background: #1e1e1e;
+                    color: #d4d4d4;
+                    padding: 20px;
+                    border-radius: 8px;
+                    font-family: monospace;
+                }
+                code { color: #ce9178; }
+            </style>
+            <div class="fancy">
+                <p>const shadow = element.<code>attachShadow</code>({ mode: 'open' });</p>
+                <p>shadow.<code>innerHTML</code> = 'This is encapsulated!';</p>
+                <p style="margin-top: 10px; color: #6a9955;">// Hidden from traditional capture</p>
+            </div>
+        `;
+    </script>
+</body>
+</html>

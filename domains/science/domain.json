@@ -1,0 +1,16 @@
+{
+  "name": "science",
+  "domain": "minternet-science",
+  "service_port": 8002,
+  "image": "minternet/science",
+  "container_port": 80,
+  "public": true,
+  "env": {
+    "PUBLIC_HOST": "minternet-science.exe.xyz",
+    "PUBLIC_SCHEME": "https"
+  },
+  "local_env": {
+    "PUBLIC_HOST": "science.test",
+    "PUBLIC_SCHEME": "http"
+  }
+}

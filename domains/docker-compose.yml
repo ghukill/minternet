@@ -1,0 +1,83 @@
+services:
+  proxy:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - minternet
+      - recipes
+      - science
+      - blogs
+      - wowser
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  minternet:
+    build: ./minternet
+    expose:
+      - "80"
+    env_file:
+      - path: ./minternet/.env.local
+        required: false
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost/healthz" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  recipes:
+    build: ./recipes
+    expose:
+      - "80"
+    env_file:
+      - path: ./recipes/.env.local
+        required: false
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  science:
+    build: ./science
+    expose:
+      - "80"
+    env_file:
+      - path: ./science/.env.local
+        required: false
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  blogs:
+    build: ./blogs
+    expose:
+      - "80"
+    env_file:
+      - path: ./blogs/.env.local
+        required: false
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  wowser:
+    build: ./wowser
+    expose:
+      - "80"
+    env_file:
+      - path: ./wowser/.env.local
+        required: false
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 3

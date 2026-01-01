@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wowser - Museum of Strange Websites</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <h1>WOWSER</h1>
+        <p class="tagline">The Museum of Strange Websites</p>
+    </header>
+
+    <main>
+        <section class="intro">
+            <p>Welcome to Wowser, a collection of intentionally pathological web patterns that challenge web archiving and replay systems.</p>
+            <p class="warning">These patterns represent real-world edge cases that can break web archives. Use them to understand replay limitations.</p>
+        </section>
+
+        <h2>Exhibits</h2>
+
+        <div class="exhibits">
+            <article class="exhibit">
+                <h3><a href="/app/home">Single Page Application</a></h3>
+                <p>Uses History API (pushState) for navigation. URLs change but page never reloads.</p>
+                <span class="tag">History API</span>
+                <span class="tag">SPA</span>
+            </article>
+
+            <article class="exhibit">
+                <h3><a href="/base-demo">Base Tag Abuse</a></h3>
+                <p>Uses the &lt;base&gt; tag to change how all relative URLs are resolved.</p>
+                <span class="tag">&lt;base&gt;</span>
+                <span class="tag">URL Resolution</span>
+            </article>
+
+            <article class="exhibit">
+                <h3><a href="/random">Randomized URLs</a></h3>
+                <p>Every page load generates new random links. Infinite unique URLs!</p>
+                <span class="tag">Crawler Trap</span>
+                <span class="tag">Random</span>
+            </article>
+
+            <article class="exhibit">
+                <h3><a href="/inline-assets">Inline Base64 Assets</a></h3>
+                <p>Images and CSS embedded as base64 data URIs. No external requests needed.</p>
+                <span class="tag">Data URI</span>
+                <span class="tag">Base64</span>
+            </article>
+
+            <article class="exhibit">
+                <h3><a href="/large-script">Large Inline Script</a></h3>
+                <p>Massive JavaScript embedded directly in HTML. Tests parser limits.</p>
+                <span class="tag">Performance</span>
+                <span class="tag">Inline JS</span>
+            </article>
+
+            <article class="exhibit">
+                <h3><a href="/csp-demo">CSP Header Issues</a></h3>
+                <p>Deliberately restrictive Content-Security-Policy that breaks functionality.</p>
+                <span class="tag">CSP</span>
+                <span class="tag">Security Headers</span>
+            </article>
+
+            <article class="exhibit">
+                <h3><a href="/refresh-loop">Meta Refresh Loop</a></h3>
+                <p>Uses meta refresh to redirect... then redirect again... and again.</p>
+                <span class="tag">Redirect</span>
+                <span class="tag">Meta Refresh</span>
+            </article>
+
+            <article class="exhibit">
+                <h3><a href="/websocket-demo">WebSocket Attempt</a></h3>
+                <p>Tries to open a WebSocket connection. Will fail but shows the pattern.</p>
+                <span class="tag">WebSocket</span>
+                <span class="tag">Real-time</span>
+            </article>
+
+            <article class="exhibit">
+                <h3><a href="/shadow-dom">Shadow DOM</a></h3>
+                <p>Uses Shadow DOM to encapsulate content. Harder to capture and replay.</p>
+                <span class="tag">Shadow DOM</span>
+                <span class="tag">Web Components</span>
+            </article>
+        </div>
+
+        <section class="notes">
+            <h2>Web Archiving Notes</h2>
+            <p>Each exhibit demonstrates a specific challenge for web archiving:</p>
+            <ul>
+                <li><strong>SPAs:</strong> Content isn't in initial HTML response</li>
+                <li><strong>Base tags:</strong> URL rewriting becomes complex</li>
+                <li><strong>Random URLs:</strong> Crawlers can't reach a fixed endpoint</li>
+                <li><strong>Inline assets:</strong> Usually work well, but can be huge</li>
+                <li><strong>CSP:</strong> May block archive's injected rewriting scripts</li>
+                <li><strong>WebSockets:</strong> Cannot be archived/replayed meaningfully</li>
+                <li><strong>Shadow DOM:</strong> Content may not be visible to capture tools</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>Wowser - A teaching example for web archiving edge cases</p>
+    </footer>
+</body>
+</html>

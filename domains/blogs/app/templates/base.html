@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Archive Blog{% endblock %} - {{ public_host }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><a href="/">Archive Blog</a></h1>
+            <p class="tagline">Exploring web preservation, one trap at a time</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <a href="/">Home</a>
+            <a href="/calendar">Calendar</a>
+            <a href="/search">Search</a>
+            {% for author_id, author in authors.items() if authors is defined %}
+            <a href="/author/{{ author_id }}">{{ author.name.split()[0] }}</a>
+            {% endfor %}
+        </div>
+    </nav>
+
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <aside class="container sidebar-box">
+        <h3>Crawler Trap Warning</h3>
+        <p>This site intentionally contains crawler traps for educational purposes:</p>
+        <ul>
+            <li><strong>Calendar:</strong> Navigate infinitely through time</li>
+            <li><strong>Search:</strong> Pagination that never ends</li>
+            <li><strong>Archives:</strong> URLs for any year/month combination</li>
+            <li><strong>Session IDs:</strong> Tracking params in URLs</li>
+        </ul>
+        {% if session_id %}
+        <p class="session-info">Your session: <code>{{ session_id }}</code></p>
+        {% endif %}
+    </aside>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Archive Blog. A teaching example for web archiving.</p>
+        </div>
+    </footer>
+</body>
+</html>

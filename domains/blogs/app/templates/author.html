@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ author.name }}{% endblock %}
+
+{% block content %}
+<div class="author-header">
+    <h2>{{ author.name }}</h2>
+    <p class="bio">{{ author.bio }}</p>
+</div>
+
+<h3>Posts by {{ author.name.split()[0] }}</h3>
+
+{% if posts %}
+    {% for post in posts %}
+    <article class="post-preview">
+        <h4><a href="/post/{{ post.slug }}">{{ post.title }}</a></h4>
+        <p class="meta">{{ post.date }}</p>
+        <p>{{ post.excerpt }}</p>
+    </article>
+    {% endfor %}
+{% else %}
+    <p>No posts yet.</p>
+{% endif %}
+
+<p><a href="/">← Back to home</a></p>
+{% endblock %}

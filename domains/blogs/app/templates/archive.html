@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Archive: {{ month_name }} {{ year }}{% endblock %}
+
+{% block content %}
+<h2>Archive: {{ month_name }} {{ year }}</h2>
+
+<div class="trap-warning">
+    ⚠️ <strong>Crawler Trap:</strong> Archive URLs exist for any year/month combination.
+    /archive/1800/1, /archive/2500/12... all valid URLs!
+</div>
+
+<div class="archive-nav">
+    <a href="/archive/{{ year }}/{{ month - 1 if month > 1 else 12 }}{% if month == 1 %}?year={{ year - 1 }}{% endif %}">&larr; Previous</a>
+    <a href="/calendar?year={{ year }}&month={{ month }}">View in Calendar</a>
+    <a href="/archive/{{ year }}/{{ month + 1 if month < 12 else 1 }}{% if month == 12 %}?year={{ year + 1 }}{% endif %}">Next &rarr;</a>
+</div>
+
+{% if posts %}
+    {% for post in posts %}
+    <article class="post-preview">
+        <h4><a href="/post/{{ post.slug }}">{{ post.title }}</a></h4>
+        <p class="meta">{{ post.date }}</p>
+        <p>{{ post.excerpt }}</p>
+    </article>
+    {% endfor %}
+{% else %}
+    <p class="no-posts">No posts were published in {{ month_name }} {{ year }}.</p>
+    <p>Try browsing other months:</p>
+    <ul>
+        <li><a href="/archive/2024/3">March 2024</a></li>
+        <li><a href="/archive/2024/2">February 2024</a></li>
+        <li><a href="/archive/2024/1">January 2024</a></li>
+        <li><a href="/archive/2023/12">December 2023</a></li>
+    </ul>
+{% endif %}
+
+<p><a href="/">← Back to home</a></p>
+{% endblock %}

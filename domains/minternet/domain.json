@@ -1,0 +1,19 @@
+{
+  "name": "minternet",
+  "domain": "minternet",
+  "service_port": 8001,
+  "image": "minternet/minternet",
+  "container_port": 80,
+  "public": true,
+  "env": {
+    "PUBLIC_HOST": "minternet.exe.xyz",
+    "PUBLIC_SCHEME": "https"
+  },
+  "local_env": {
+    "PUBLIC_HOST": "minternet.test",
+    "PUBLIC_SCHEME": "http"
+  },
+  "hooks": {
+    "pre_build": "python ../../scripts/generate_index.py"
+  }
+}

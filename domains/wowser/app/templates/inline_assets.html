@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline Base64 Assets - Wowser</title>
+    <!-- Inline CSS as base64 data URI -->
+    <link rel="stylesheet" href="data:text/css;base64,Ym9keSB7IGZvbnQtZmFtaWx5OiBzYW5zLXNlcmlmOyBtYXgtd2lkdGg6IDgwMHB4OyBtYXJnaW46IDAgYXV0bzsgcGFkZGluZzogMjBweDsgfQpoZWFkZXIgeyBiYWNrZ3JvdW5kOiAjMzMzOyBjb2xvcjogd2hpdGU7IHBhZGRpbmc6IDIwcHg7IHRleHQtYWxpZ246IGNlbnRlcjsgfQpoZWFkZXIgYSB7IGNvbG9yOiB3aGl0ZTsgdGV4dC1kZWNvcmF0aW9uOiBub25lOyB9Ci53YXJuaW5nLWJveCB7IGJhY2tncm91bmQ6ICNmZmYzY2Q7IGJvcmRlcjogMXB4IHNvbGlkICNmZmMxMDc7IHBhZGRpbmc6IDE1cHg7IG1hcmdpbjogMjBweCAwOyBib3JkZXItcmFkaXVzOiA4cHg7IH0KLmltYWdlLWdyaWQgeyBkaXNwbGF5OiBncmlkOyBncmlkLXRlbXBsYXRlLWNvbHVtbnM6IHJlcGVhdCgzLCAxZnIpOyBnYXA6IDEwcHg7IG1hcmdpbjogMjBweCAwOyB9Ci5pbWFnZS1ncmlkIGltZyB7IHdpZHRoOiAxMDAlOyBoZWlnaHQ6IGF1dG87IGJvcmRlci1yYWRpdXM6IDhweDsgfQ==">
+</head>
+<body>
+    <header>
+        <h1><a href="/">WOWSER</a></h1>
+        <p>Inline Base64 Assets Demo</p>
+    </header>
+
+    <main>
+        <div class="warning-box">
+            <strong>Base64 Data URIs</strong>
+            <p>This page embeds images and CSS directly as base64 data URIs. No external requests!</p>
+        </div>
+
+        <h2>Embedded Images</h2>
+        <p>These images are encoded as base64 and embedded directly in the HTML:</p>
+
+        <div class="image-grid">
+            <!-- Red square as base64 PNG -->
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAABN0lEQVR4nO3QMQ0AAAjAMNi/J9gDsLtCDhZwmyS///FP5XCBDEEQ1BCCIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBkB0e7AAB37X8bQAAAABJRU5ErkJggg==" alt="Red square">
+
+            <!-- Green square as base64 PNG -->
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAABN0lEQVR4nO3QsQ3AIAwAQdb/NFZIpKEhseF8BZQvM3j8H/5UDheIEARBDSEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBkB0GIxIB3xZ0RAAAAABJRU5ErkJggg==" alt="Green square">
+
+            <!-- Blue square as base64 PNG -->
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAABN0lEQVR4nO3QsQ3AIAwAQdb/NJZIpKEhseF8BZQnM3j8H/5UDheIEARBDSEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBEIIgBEEIghAEIQhCEIQgCEEQgiAEQQiCEAQhCEIQhCAIQRCCIARBCIIQBCEIQhCEIAhBkB0GDDcB35VK2gAAAABJRU5ErkJggg==" alt="Blue square">
+        </div>
+
+        <h2>Embedded SVG</h2>
+        <p>SVG can be embedded as a data URI too:</p>
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzY2N2VlYSIvPjx0ZXh0IHg9IjEwMCIgeT0iNTUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LXNpemU9IjIwIj5JbmxpbmUgU1ZHPC90ZXh0Pjwvc3ZnPg==" alt="Inline SVG" style="max-width: 100%;">
+
+        <h2>Why This Works Well for Archives</h2>
+        <ul>
+            <li>No external requests needed during capture</li>
+            <li>All assets included in single HTML file</li>
+            <li>No URL rewriting required for these assets</li>
+        </ul>
+
+        <h2>Why This Can Be Problematic</h2>
+        <ul>
+            <li>Base64 encoding increases size by ~33%</li>
+            <li>Can't be cached separately from HTML</li>
+            <li>Large assets make HTML file huge</li>
+            <li>Can slow down parsing</li>
+        </ul>
+
+        <p><a href="/">← Back to Museum</a></p>
+    </main>
+
+    <footer style="background: #333; color: #aaa; padding: 20px; text-align: center; margin-top: 20px;">
+        <p>Wowser - A teaching example for web archiving edge cases</p>
+    </footer>
+</body>
+</html>

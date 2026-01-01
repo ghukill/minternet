@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% if query %}: {{ query }}{% endif %}{% endblock %}
+
+{% block content %}
+<h2>Search</h2>
+
+<div class="trap-warning">
+    ⚠️ <strong>Crawler Trap:</strong> Search pagination continues indefinitely.
+    Page 1, 2, 3... 999, 1000... a crawler will never finish!
+</div>
+
+<form action="/search" method="get" class="search-form">
+    <input type="text" name="q" value="{{ query }}" placeholder="Search posts...">
+    <button type="submit">Search</button>
+</form>
+
+<div class="search-suggestions">
+    <p>Try searching for:</p>
+    <ul>
+        {% for term in suggestions %}
+        <li><a href="/search?q={{ term }}">{{ term }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% if query %}
+<h3>Results for "{{ query }}" (Page {{ page }})</h3>
+
+{% if results %}
+    {% for post in results %}
+    <article class="post-preview">
+        <h4><a href="/post/{{ post.slug }}">{{ post.title }}</a></h4>
+        <p class="meta">{{ post.date }} by {{ post.author }}</p>
+        <p>{{ post.excerpt }}</p>
+    </article>
+    {% endfor %}
+{% else %}
+    <p class="no-results">No results found for "{{ query }}" on this page.</p>
+{% endif %}
+
+<div class="pagination">
+    {% if has_prev %}
+    <a href="/search?q={{ query }}&page={{ page - 1 }}">&larr; Previous</a>
+    {% endif %}
+
+    <span class="page-info">Page {{ page }}</span>
+
+    {% if has_next %}
+    <a href="/search?q={{ query }}&page={{ page + 1 }}">Next &rarr;</a>
+    {% endif %}
+</div>
+
+<p class="pagination-note">
+    Also try:
+    <a href="/search?q={{ query }}&page=10">Page 10</a> |
+    <a href="/search?q={{ query }}&page=100">Page 100</a> |
+    <a href="/search?q={{ query }}&page=500">Page 500</a>
+</p>
+{% endif %}
+{% endblock %}
