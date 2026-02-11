@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template, request, make_response
+from flask import Flask, Response, redirect, render_template, request, make_response
 import calendar
 from datetime import datetime
 import uuid
@@ -209,6 +209,30 @@ def index():
 @app.route('/healthz')
 def healthz():
     return 'OK'
+
+
+@app.route('/posts/<slug>')
+def post_redirect(slug):
+    return redirect(f'/post/{slug}', code=301)
+
+
+@app.route('/sitemap.xml')
+def sitemap():
+    base = f'{PUBLIC_SCHEME}://{PUBLIC_HOST}'
+    urls = [f'{base}/']
+    urls += [f'{base}/post/{p["slug"]}' for p in POSTS]
+    urls += [f'{base}/author/{a}' for a in AUTHORS]
+
+    xml_entries = '\n'.join(
+        f'  <url><loc>{url}</loc></url>' for url in urls
+    )
+    xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f'{xml_entries}\n'
+        '</urlset>\n'
+    )
+    return Response(xml, mimetype='application/xml')
 
 
 @app.route('/post/<slug>')
