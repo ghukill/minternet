@@ -14,8 +14,10 @@
 
     <main>
         <div class="warning-box">
-            <strong>WebSocket Attempt</strong>
-            <p>This page attempts to open a WebSocket connection. It will fail (no server), but demonstrates the pattern.</p>
+            <strong>Live WebSocket</strong>
+            <p>This page opens a real WebSocket connection to <code>{{ public_ws_url }}</code>.
+            On the live site it connects, streams messages, and echoes anything you send.
+            Now try the same page in a web archive replay.</p>
         </div>
 
         <h2>Connection Status</h2>
@@ -27,6 +29,11 @@
         <div id="log" class="log-box">
             <p class="log-entry">Waiting for connection...</p>
         </div>
+
+        <form id="send-form" class="send-form">
+            <input id="send-input" type="text" placeholder="Type a message to send..." autocomplete="off" disabled>
+            <button type="submit" id="send-button" disabled>Send</button>
+        </form>
 
         <h2>Why WebSockets Can't Be Archived</h2>
         <ul>
@@ -74,6 +81,9 @@
         .log-entry.error { color: #f48771; }
         .log-entry.success { color: #89d185; }
         .log-entry.info { color: #75beff; }
+        .send-form { display: flex; gap: 8px; margin: 12px 0 24px; }
+        .send-form input { flex: 1; padding: 8px; font-size: 1em; }
+        .send-form button { padding: 8px 16px; cursor: pointer; }
     </style>
 
     <script>
@@ -96,17 +106,28 @@
         // Clear initial content
         logEl.innerHTML = '';
 
-        // Attempt WebSocket connection
-        log('Attempting WebSocket connection...', 'info');
+        const sendForm = document.getElementById('send-form');
+        const sendInput = document.getElementById('send-input');
+        const sendButton = document.getElementById('send-button');
+        let opened = false;
+
+        function setSendEnabled(enabled) {
+            sendInput.disabled = !enabled;
+            sendButton.disabled = !enabled;
+        }
+
+        // Open a live WebSocket connection
+        log('Opening WebSocket connection to {{ public_ws_url }} ...', 'info');
         setStatus('connecting', 'Connecting...');
 
         try {
-            // This will fail since there's no WebSocket server
             const ws = new WebSocket('{{ public_ws_url }}');
 
             ws.onopen = function() {
+                opened = true;
                 log('Connection opened!', 'success');
-                setStatus('connected', 'Connected');
+                setStatus('connected', 'Connected (live)');
+                setSendEnabled(true);
                 ws.send('Hello from the client!');
             };
 
@@ -114,31 +135,36 @@
                 log('Received: ' + event.data, 'success');
             };
 
-            ws.onerror = function(error) {
+            ws.onerror = function() {
                 log('WebSocket error occurred', 'error');
-                setStatus('error', 'Connection Failed');
             };
 
             ws.onclose = function(event) {
-                log(`Connection closed (code: ${event.code})`, 'error');
-                log('This is expected - there is no WebSocket server!', 'info');
-                log('In a web archive replay, WebSockets cannot work.', 'info');
+                setSendEnabled(false);
+                if (opened) {
+                    log(`Connection closed (code: ${event.code}). Reload the page to reconnect.`, 'info');
+                    setStatus('error', 'Disconnected');
+                } else {
+                    log(`Could not connect (code: ${event.code}).`, 'error');
+                    log('If you are viewing this in a web archive, this is expected:', 'info');
+                    log('there is no live server to talk to, and the archive cannot replay a conversation.', 'info');
+                    setStatus('error', 'Connection Failed');
+                }
             };
+
+            sendForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const text = sendInput.value.trim();
+                if (!text || ws.readyState !== WebSocket.OPEN) return;
+                ws.send(text);
+                log('Sent: ' + text, 'info');
+                sendInput.value = '';
+            });
 
         } catch (error) {
             log('Error creating WebSocket: ' + error.message, 'error');
             setStatus('error', 'Failed to Create WebSocket');
         }
-
-        // Also try to show what a working WebSocket might do
-        setTimeout(() => {
-            log('---', 'info');
-            log('In a real application, you might see messages like:', 'info');
-            log('  → User joined: alice', 'success');
-            log('  → alice: Hello everyone!', 'success');
-            log('  → Server: 5 users online', 'success');
-            log('But none of this can be captured in a web archive.', 'error');
-        }, 2000);
     </script>
 </body>
 </html>

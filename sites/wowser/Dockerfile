@@ -15,4 +15,4 @@ EXPOSE 80
 HEALTHCHECK --interval=5s --timeout=3s --retries=3 \
     CMD python -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1/healthz', timeout=2)"
 
-CMD ["gunicorn", "--bind", "0.0.0.0:80", "--workers", "2", "--threads", "4", "--access-logfile", "-", "server:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:80", "--workers", "2", "--threads", "32", "--access-logfile", "-", "server:app"]

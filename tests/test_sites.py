@@ -42,6 +42,34 @@ def test_wowser_ws_scheme_follows_public_url(monkeypatch):
     assert "wss://mini-wowser.exe.xyz/ws/chat" in body
 
 
+
+def test_wowser_ws_chat_streams_and_echoes(monkeypatch):
+    """Connect a real WebSocket client to /ws/chat on a live local server."""
+    import threading
+
+    simple_websocket = pytest.importorskip("simple_websocket")
+    from werkzeug.serving import make_server
+
+    client = load_app(
+        "wowser", monkeypatch, WS_SESSION_SECONDS="2", WS_TICK_SECONDS="0.1"
+    )
+    server = make_server("127.0.0.1", 0, client.application, threaded=True)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        ws = simple_websocket.Client.connect(f"ws://127.0.0.1:{server.port}/ws/chat")
+        try:
+            assert ws.receive(timeout=5).startswith("Server: connected at")
+            ws.send("ping")
+            received = [ws.receive(timeout=5) for _ in range(4)]
+            assert "Server echo: ping" in received
+            assert "User joined: alice" in received
+        finally:
+            ws.close()
+    finally:
+        server.shutdown()
+        thread.join(timeout=5)
+
 def test_science_absolute_api_urls(monkeypatch):
     client = load_app("science", monkeypatch, PUBLIC_URL="http://science.test:8080")
     data = client.get("/api/featured").get_json()

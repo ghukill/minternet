@@ -1,12 +1,16 @@
 import os
+import time
+from datetime import datetime, timezone
 from urllib.parse import urlsplit
 
 from flask import Flask, render_template, jsonify, make_response, request
+from flask_sock import Sock
 import random
 import string
 import base64
 
 app = Flask(__name__)
+sock = Sock(app)
 
 PORT = int(os.getenv("PORT", "80"))
 # Injected by the minternet CLI: this site's public base URL, e.g. https://x.exe.xyz
@@ -91,13 +95,44 @@ def refresh_loop():
     return render_template('refresh_loop.html', count=count)
 
 
-# WebSocket attempt (will fail but shows the pattern)
+# WebSocket demo: the page connects live to /ws/chat (works live, not in replay)
 @app.route('/websocket-demo')
 def websocket_demo():
     return render_template(
         'websocket_demo.html',
         public_ws_url=_public_ws_url(),
     )
+
+
+# Each WebSocket holds a gunicorn thread, so sessions are time-boxed.
+WS_SESSION_SECONDS = int(os.getenv("WS_SESSION_SECONDS", "60"))
+WS_TICK_SECONDS = float(os.getenv("WS_TICK_SECONDS", "2"))
+WS_SCRIPT = [
+    "User joined: alice",
+    "alice: Hello everyone!",
+    "User joined: bob",
+    "bob: Is anyone archiving this conversation?",
+    "alice: Good luck with that.",
+]
+
+
+def _utc_now() -> str:
+    return datetime.now(timezone.utc).strftime("%H:%M:%S UTC")
+
+
+@sock.route('/ws/chat')
+def ws_chat(ws):
+    """Live feed: scripted chatter, then clock ticks; echoes anything the client sends."""
+    ws.send(f"Server: connected at {_utc_now()}")
+    script = iter(WS_SCRIPT)
+    deadline = time.monotonic() + WS_SESSION_SECONDS
+    while time.monotonic() < deadline:
+        message = ws.receive(timeout=WS_TICK_SECONDS)
+        if message is not None:
+            ws.send(f"Server echo: {message}")
+        else:
+            ws.send(next(script, f"Server: tick {_utc_now()}"))
+    ws.send(f"Server: {WS_SESSION_SECONDS}s demo session over, closing.")
 
 
 # API that returns random data each time
