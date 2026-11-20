@@ -1,0 +1,20 @@
+# Project-wide settings for the minternet CLI.
+# Per-site settings live in sites/<name>/site.toml.
+
+# Prefix used to derive names: VM "<prefix>-<site>", image "<prefix>/<site>",
+# local docker network "<prefix>".
+prefix = "minternet"
+
+[local]
+# Sites are served by a local nginx proxy at http://<site>.<tld>
+tld = "test"
+# Host port the local proxy listens on. Non-80 ports appear in site URLs.
+http_port = 80
+
+[exe]
+# Sites are served at https://<vm>.<domain>
+domain = "exe.xyz"
+# Port on each VM that the site's container is published on; the exe.dev
+# HTTPS proxy is pointed at it. One container per VM, so it can be the same
+# for every site.
+vm_port = 8000

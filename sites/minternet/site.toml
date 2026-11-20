@@ -1,0 +1,7 @@
+title = "The Minternet"
+description = "Hub page linking to every other site."
+
+# The hub keeps the bare project name as its VM (https://minternet.exe.xyz)
+# and doesn't list itself.
+vm = "minternet"
+listed = false

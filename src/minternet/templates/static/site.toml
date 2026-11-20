@@ -1,0 +1,11 @@
+title = "__TITLE__"
+description = "__DESCRIPTION__"
+
+# Optional settings (defaults shown):
+# vm = "<prefix>-__NAME__"   # exe.dev VM name
+# port = 80                  # port the container listens on
+# public = true              # exe.dev: public, or restricted to logged-in users
+# listed = true              # show on the hub page
+#
+# [env]                      # extra environment variables for the container
+# EXAMPLE = "value"
