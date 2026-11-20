@@ -209,8 +209,8 @@ __marimo__/
 scratch/
 !scratch/.gitkeep
 
-# Minternet local environment files
-domains/*/.env.local
+# Minternet CLI local state (generated proxy config)
+.minternet/
 
 AGENTS.md
 PLAN.md

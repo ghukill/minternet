@@ -1,13 +1,20 @@
 [project]
 name = "minternet"
-version = "0.1.0"
+version = "0.2.0"
+description = "A tiny internet of test websites for web archiving, deployable locally or to exe.dev."
 requires-python = ">=3.13"
 dependencies = [
-  "click",
+  "click>=8.1",
 ]
 
 [project.scripts]
 minternet = "minternet.cli:main"
+
+[dependency-groups]
+dev = [
+  "pytest>=8",
+  "flask>=3.1",  # for app smoke tests in tests/test_sites.py
+]
 
 [build-system]
 requires = ["setuptools>=69"]
@@ -18,3 +25,10 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+minternet = ["templates/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
